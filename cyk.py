@@ -2,7 +2,6 @@ import sys
 import os
 import numpy as np
 import re
-from beautifultable import BeautifulTable
 
 CFG2CNF_PATH = 'CFG2CNF/CFG2CNF.py'
 CFG_PATH = 'CFG_list.txt'
@@ -37,7 +36,6 @@ for i in range(1,n):			#length of span
 		for k in range(1 , i-1):
 			for r in 
 '''
-
 
 def getTerminals():
 	contents = open(CNF_PATH).read()
