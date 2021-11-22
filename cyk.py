@@ -3,7 +3,7 @@ import os
 import numpy as np
 import re
 
-CFG2CNF_PATH = 'CFG2CNF/CFG2CNF.py'
+CFG2CNF_PATH = 'CFG2CNF.py'
 CFG_PATH = 'CFG_list.txt'
 CNF_PATH = 'CNF_list.txt'
 
