@@ -1,41 +1,60 @@
-import sys
 import os
-import numpy as np
-import re
+from token import *
 
 CFG2CNF_PATH = 'CFG2CNF.py'
 CFG_PATH = 'CFG_list.txt'
 CNF_PATH = 'CNF_list.txt'
 
-var_regex = [r'[a-zA-Z_][a-zA-Z_\d]*']		#Ekspresi reguler untuk mengvalidasi variabel
-angka_regex = [r'\d+']					#Ekspresi reguler untuk mengvalidasi angka
-space0_regex = [r'[\s]*']					#Ekspresi reguler untuk mengvalidasi spasi minimal 0
-space1_regex = [r'[\s]+']					#Ekspresi reguler untuk mengvalidasi spasi minimal 1
+def listIdxTrueAll(inList):
+	outList = []
+	for i in range(len(inList)):
+		if inList[i]:
+			outList.append(i)
+	return outList
 
-#Dictionary - validasi variables
-Validate = {'nl' : '\n' , 'spasi0' : space0_regex , 'spasi1' : space1_regex}
 
-# #CYK
-# S = [1,2,3,3,4,5] #S string containing n characters
-# n = 5
-# Grammar = ['r1','r2','r3','r4','r5']		#grammar containing r nonterminal symbols
-# #Grammar mengandung start symbol Rs
+# CYK Berdasarkan Token
+def CYK(testtoken, terminals, variables, productions):
+	global p
+	p = [[[	False for k in range(len(variables))] \
+		for j in range(len(testtoken))] \
+		for i in range(len(testtoken))]
 
-# P = [[[False for i in range(n)]]]	#array of boolean
-# #ukuran :
-# #i : 
-# #j :
-#k :
-'''
-for i in range(n):	#banyak string S
-	for j in range(n)	#banyak grammar (unit production Rj -> ai  ; ai : alphabet pada string S)
-		P[i][0][j] = True
 
-for i in range(1,n):			#length of span
-	for j in range(1,n-i+1):	#start of span 
-		for k in range(1 , i-1):
-			for r in 
-'''
+	# Baris 1
+	for i in range(len(testtoken)):
+		for j in range(len(productions)):
+			if (productions[j][1] in terminals):
+				
+				if (productions[j][1] == testtoken[i]):
+					variable = productions[j][0]
+					k = variables.index(variable)
+					p[0][i][k] = True
+
+	# Baris 2 sampai n
+	for i in range(1, len(testtoken)):
+		for j in range(len(testtoken) - i):
+			for k in range(i):
+				arrx = p[k][j]
+				arry = p[i-k-1][j+k+1]
+				arr1 = listIdxTrueAll(arrx)
+				arr2 = listIdxTrueAll(arry)
+
+				# Kombinasi index
+				for idx1 in arr1:
+					for idx2 in arr2:
+						cekVar = variables[idx1] + ' ' + variables[idx2]
+						for production in productions:
+							if production[1] == cekVar:
+								idxVar = variables.index(production[0])
+								p[i][j][idxVar] = True
+
+	if p[len(testtoken)-1][0][0] == True:
+		print('Accepted')
+	else:
+		print('Syntax Error')
+
+
 
 def getTerminals():
 	contents = open(CNF_PATH).read()
@@ -64,7 +83,6 @@ def getProductions():
 	contents = open(CNF_PATH).read()
 	productions = contents.split('Productions:\n')[1]
 	productions = productions.split('\n')
-	# p = (contents.split("Productions:\n")[1].replace("\n", ";").split(';'))
 
 	for production in productions:
 		left = production.split(' -> ')[0]
@@ -76,7 +94,7 @@ def getProductions():
 
 
 if __name__ == '__main__':
-
+	
 	os.system(f'python {CFG2CNF_PATH} {CFG_PATH} {CNF_PATH}')
 
 	testpath = input("File path: ")
@@ -85,10 +103,11 @@ if __name__ == '__main__':
 	teststring = f.read()
 	f.close()
 
-	teststring = teststring.rstrip()
-
+	test_token = make_token(teststring)
+	
 	terminals = getTerminals() 
 	variables = getVariables()
 	productions = getProductions()
 	
-	#CYKAlgorithm(teststring, productions, variables, terminals)
+	CYK(test_token, terminals, variables, productions)
+	

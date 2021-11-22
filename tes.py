@@ -1,9 +1,3 @@
-fp = open("tesString.txt" , 'r')
+text = "Halo, saya Budi"
 
-contents = fp.read()
-
-contents = contents.split()
-
-fp.close()
-
-print(contents)
+print(text.split())

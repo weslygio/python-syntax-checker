@@ -1,6 +1,6 @@
 Terminals:
-spasi0 spasi1 = + - * % ( ) [ ] { } / // ** == >= <= > < != # ' " : . 
-in and or not from import as angka text variabel if elif else for def
+spasi0 spasi1 = + - * % ( ) [ ] { } / // ** == >= <= > < != # ' " : . , 
+in and or not from import as angka text variabel if elif else for def 
 nl false none true pass break continue return raise
 
 Variables:
@@ -48,7 +48,7 @@ Operand -> [ spasi0 Operand spasi0 NewOperand spasi0 ];
 Operand -> { spasi0 Operand spasi0 NewOperand spasi0 };
 NewOperand -> , spasi0 Operand | epsilon;
 
-Literal -> PosMin spasi0 Angka | PosMin spasi0 Angka . Angka | PosMin spasi0 . Angka;
+Literal -> PosMin spasi0 angka;
 PosMin -> AddOp spasi0 PosMin | epsilon;
 
 FungsiC -> CallMethod variabel spasi0 ( spasi0 Argumen spasi0 );
