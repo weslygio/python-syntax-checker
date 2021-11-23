@@ -1,6 +1,6 @@
 # python-syntax-checker
 
-Python syntax checker using CFG and FA with CYK algorithm
+Python syntax checker using CFG and FA with CYK algorithm <br>
 
 <table>
 <tr>><td>Wesly Giovano</td><td>13520071</td></tr>

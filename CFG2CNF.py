@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 #IT's assumed that starting variable is the first typed
 import sys, helper
+from cyk import CFG_PATH, CNF_PATH
 
 left, right = 0, 1
 
 K, V, Productions = [],[],[]
-variablesJar = [f"Pr_{i}" for i in range(300)]
+variablesJar = [f"Pr_{i}" for i in range(500)]
 
 def isUnitary(rule, variables):
 	if rule[left] in variables and rule[right][0] in variables and len(rule[right]) == 1:
@@ -82,16 +83,16 @@ def DEL(productions):
 	#seekAndDestroy throw back in:
 	#        – outlaws all left side of productions such that right side is equal to the outlaw
 	#        – productions the productions without outlaws 
-	outlaws, productions = helper.seekAndDestroy(target='epsilon', productions=productions)
+	outlaws, productions = helper.seekAndDestroy(target='e', productions=productions)
 	#add new reformulation of old rules
 	for outlaw in outlaws:
 		#consider every production: old + new resulting important when more than one outlaws are in the same prod.
-		for production in productions + [epsilon for epsilon in newSet if epsilon not in productions]:
+		for production in productions + [e for e in newSet if e not in productions]:
 			#if outlaw is present in the right side of a rule
 			if outlaw in production[right]:
 				#the rule is rewrited in all combination of it, rewriting "e" rather than outlaw
 				#this cycle prevent to insert duplicate rules
-				newSet = newSet + [epsilon for epsilon in  helper.rewrite(outlaw, production) if epsilon not in newSet]
+				newSet = newSet + [e for e in  helper.rewrite(outlaw, production) if e not in newSet]
 
 	#add unchanged rules and return
 	return newSet + ([productions[i] for i in range(len(productions)) 
@@ -99,7 +100,7 @@ def DEL(productions):
 
 def unit_routine(rules, variables):
 	unitaries, result = [], []
-	#controllo se una regola è unaria #bahasa apa ni coeg T-T
+	#controllo se una regola è unaria
 	for aRule in rules:
 		if isUnitary(aRule, variables):
 			unitaries.append( (aRule[left], aRule[right][0]) )
@@ -128,7 +129,6 @@ if __name__ == '__main__':
 	if len(sys.argv) > 2:
 		CFG_PATH = str(sys.argv[1])
 		CNF_PATH = str(sys.argv[2])
-
 	else:
 		raise LookupError
 	
@@ -139,8 +139,5 @@ if __name__ == '__main__':
 	Productions = BIN(Productions, variables=V)
 	Productions = DEL(Productions)
 	Productions = UNIT(Productions, variables=V)
-	
-	#print( helper.prettyForm(K, V, Productions) )
-	#print( len(Productions) )
-	open(CNF_PATH, 'w').write( helper.prettyForm(K, V, Productions) )
 
+	open(CNF_PATH, 'w').write(	helper.prettyForm(K, V, Productions) )

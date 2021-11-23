@@ -1,5 +1,6 @@
 import os
-from token import *
+import sys
+from make_token import *
 
 CFG2CNF_PATH = 'CFG2CNF.py'
 CFG_PATH = 'CFG_list.txt'
@@ -15,11 +16,9 @@ def listIdxTrueAll(inList):
 
 # CYK Berdasarkan Token
 def CYK(testtoken, terminals, variables, productions):
-	global p
 	p = [[[	False for k in range(len(variables))] \
 		for j in range(len(testtoken))] \
 		for i in range(len(testtoken))]
-
 
 	# Baris 1
 	for i in range(len(testtoken)):
@@ -94,20 +93,24 @@ def getProductions():
 
 
 if __name__ == '__main__':
-	
-	os.system(f'python {CFG2CNF_PATH} {CFG_PATH} {CNF_PATH}')
+	if len(sys.argv) > 1:
+		testpath = str(sys.argv[1])
+	else:
+		raise LookupError
 
-	testpath = input("File path: ")
+	os.system(f'python {CFG2CNF_PATH} {CFG_PATH} {CNF_PATH}')
 
 	f = open(testpath)
 	teststring = f.read()
 	f.close()
+	teststring = teststring.rstrip()
 
-	test_token = make_token(teststring)
-	
+	global testtoken, terminals, variables, productions
+	testtoken = make_token(teststring)
+
 	terminals = getTerminals() 
 	variables = getVariables()
 	productions = getProductions()
-	
-	CYK(test_token, terminals, variables, productions)
-	
+
+	CYK(testtoken, terminals, variables, productions)
+
