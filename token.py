@@ -1,18 +1,20 @@
 import re
 
-var_regex = r'[a-zA-Z_][a-zA-Z_\d]*'		#Ekspresi reguler untuk mengvalidasi variabel
-angka_regex = r'\d+'						#Ekspresi reguler untuk mengvalidasi angka
-space0_regex = r'[\s]*'						#Ekspresi reguler untuk mengvalidasi spasi minimal 0
-space1_regex = r'[\s]+'						#Ekspresi reguler untuk mengvalidasi spasi minimal 1
+
+# var_regex = r'[a-zA-Z_][a-zA-Z_\d]*'		#Ekspresi reguler untuk mengvalidasi variabel
+# angka_regex = r'\d+'						#Ekspresi reguler untuk mengvalidasi angka
+# space0_regex = r'[\s]*'						#Ekspresi reguler untuk mengvalidasi spasi minimal 0
+# space1_regex = r'[\s]+'						#Ekspresi reguler untuk mengvalidasi spasi minimal 1
 
 #Dictionary - validasi variables
-validate = {'nl' : '\n' , \
-			'variabel' : var_regex, \
-			'angka' : angka_regex, \
-			'false' : 'False', \
-			'true'	: 'True', \
-			'none'	: 'None'
-			}
+# validate = {'nl' : '\n' , \
+#			'variabel' : var_regex, \
+#			'angka' : angka_regex, \
+#			'false' : 'False', \
+#			'true'	: 'True', \
+#			'none'	: 'None'
+#			}
+
 
 def removeEmpty(L):
 	NewL = []
@@ -38,8 +40,7 @@ reg = 		\n|
 			\&|
 			_|
 			\[|
-			]|
-			
+			\]|			
 			\"\"\"|
 			\'\'\'|
 			\"|
@@ -81,13 +82,6 @@ reg = 		\n|
 '''
 
 reg = r'\n|\t|\(|\)|\*|\**|=|\+|-|!|\#|\$|\&|_|\[|\]|\"\"\"|\'\'\'|\"|\'|:|,|>|<|{|}|<=|>=|==|!=|%|in|and|or|not|from|import|as|if|elif|else|for|def|False|True|None|pass|break|continue|return|raise|[a-zA-Z_][a-zA-Z_0-9]*|\d+(?:\.\d*)?|\.\d+'
-
-
-
-#def make_token():
-
-
-
 
 
 
