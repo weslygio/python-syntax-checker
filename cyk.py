@@ -96,7 +96,7 @@ if __name__ == '__main__':
 	if len(sys.argv) > 1:
 		testpath = str(sys.argv[1])
 	else:
-		raise LookupError
+		testpath = input('Input path: ')
 
 	os.system(f'python {CFG2CNF_PATH} {CFG_PATH} {CNF_PATH}')
 

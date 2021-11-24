@@ -4,9 +4,9 @@ in and or not from import as angka variabel if elif else for def
 nl false none true pass break continue return raise is class
 
 Variables:
-S SValid SLoop SReturn Statement Ekspresi Literal String MultilineString Text TextwithNL Symbol 
-OpArit AddOp MulOp OpBoolBiner OpBoolUner Operator Operand NewOperand PosMin 
-FungsiD FungsiC Argumen Parameter ElemenList CallMethod NewArgumen ReturnEC NewParameter Index 
+S SValid SLoop SReturn Statement Ekspresi Literal String MultilineString Text TextwithNL Symbol Keyword 
+OpArit AddOp MulOp OpBoolBiner OpBoolUner Operator Operand NewOperand PosMin VariabelAtribut 
+FungsiD FungsiC ClassD Argumen Parameter ElemenList CallMethod NewArgumen ReturnEC NewParameter Index 
 IfThenElse IfPart1 IfPart2 IfPart3 IfPart2Star IfPart3EC 
 IfThenElseReturn IfPart2StarReturn IfPart3ECReturn 
 IfThenElseLoop IfPart2StarLoop IfPart3ECLoop 
@@ -14,27 +14,29 @@ ForLoop ForLoop1 ForLoop2 ForLoop3 ForLoop4
 WhileLoop WhileLoop1 WhileLoop2
 
 Productions:
-S -> S nl SValid | SValid | SValid nl S | e;
+S -> S S | SValid | e;
 SValid -> nl;
-SValid -> Statement;
+SValid -> Statement nl;
 SValid -> IfThenElse;
 SValid -> ForLoop;
 SValid -> WhileLoop;
-SValid -> MultilineString;
+SValid -> MultilineString nl;
 SValid -> FungsiD;
-SValid -> FungsiC;
+SValid -> ClassD;
 
 Statement -> Ekspresi;
-Statement -> variabel = Ekspresi;
-Statement -> variabel OpArit = Ekspresi;
-Statement -> import variabel as variabel;
-Statement -> from variabel import variabel;
-Statement -> from variabel import *;
+Statement -> VariabelAtribut = Ekspresi;
+Statement -> VariabelAtribut OpArit = Ekspresi;
+Statement -> import VariabelAtribut as variabel;
+Statement -> from VariabelAtribut import variabel;
+Statement -> from VariabelAtribut import *;
 Statement -> import variabel;
-Statement -> from variabel import variabel as variabel;
-Statement -> # Text nl;
+Statement -> from VariabelAtribut import variabel as variabel;
+Statement -> # Text;
 Statement -> pass;
-Statement -> raise variabel;
+Statement -> raise VariabelAtribut;
+
+VariabelAtribut -> variabel | VariabelAtribut . variabel;
 
 OpArit -> AddOp | MulOp;
 AddOp -> + | -;
@@ -48,7 +50,7 @@ Ekspresi -> Operand | Ekspresi Operator Operand;
 Ekspresi -> OpBoolUner Operand | OpBoolUner ( Operand );
 Ekspresi -> ( Ekspresi );
 
-Operand -> variabel | Literal | FungsiC | String | true | false | none | MultilineString;
+Operand -> VariabelAtribut | Literal | FungsiC | String | true | false | none | MultilineString;
 Operand -> ( Operand NewOperand );
 Operand -> [ Operand NewOperand ];
 Operand -> { Operand NewOperand };
@@ -62,18 +64,19 @@ CallMethod -> variabel . | ElemenList . | e;
 Argumen -> Ekspresi NewArgumen | e;
 NewArgumen -> , Ekspresi NewArgumen | e;
 
+ClassD -> class variabel : nl S;
+
 FungsiD -> def variabel ( Parameter ) : nl SReturn;
 ReturnEC -> return Ekspresi;
 Parameter -> variabel NewParameter | e;
 NewParameter -> , variabel NewParameter | e;
-
 SReturn -> SReturn SReturn | IfThenElseReturn | S | ReturnEC | nl | e;
 
 IfThenElseReturn -> IfPart1 SReturn IfPart2StarReturn IfPart3ECReturn;
 IfPart2StarReturn -> IfPart2 SReturn IfPart2StarReturn | e;
 IfPart3ECReturn -> IfPart3 SReturn | e;
 
-ElemenList -> variabel Index;
+ElemenList -> VariabelAtribut Index;
 Index -> [ Ekspresi ] Index | [ Ekspresi ];
 
 String -> ' Text ' | " Text ";
@@ -109,8 +112,10 @@ WhileLoop1 -> while ( Ekspresi ) : nl;
 WhileLoop2 -> while Ekspresi : nl;
 
 Symbol -> ! | @ | # | $ | ^ | & | \ | ? | ~ | = | ( | ) | + | - | * | / | < | > | , | . | : | { | } | [ | ] | %;
+Keyword -> in | and | or | not | from | import | as | if | elif | else | for | def | none | true | pass | break | continue | return | raise | is | class;
 
 Text -> e;
 Text -> variabel Text;
 Text -> angka Text;
-Text -> Symbol Text
+Text -> Symbol Text;
+Text -> Keyword Text

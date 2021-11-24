@@ -9,13 +9,13 @@ symbols = [	'(',')','*', '<=','>=','==','!=', '**','=','+','-','!', '[',']',
 			'"""',"'''",'"',"'",':',',','>','<','{','}','#','$','&','_',
 			'%', '.', '?', '^', '\\', '@', '~']
 
-reg = r'\n|\(|\)|\*|\*\*|<=|>=|==|!=|%|\?|^|\\|=|\+|-|!|\#|\$|\&|_|\[|\]|\"\"\"|\'\'\'|\"|\'|:|,|>|<|{|}|@|~|[a-zA-Z_][a-zA-Z_0-9]*|\d+(?:\.\d*)?|\.\d+|\.'
+reg = r'\n|\(|\)|\*|\*\*|<=|>=|==|!=|%|\?|^|\\|=|\+|-|!|\#|\$|\&|_|\[|\]|\"\"\"|\'\'\'|\"|\'|:|,|>|<|{|}|@|~|\d*\.\d*|\w+'
 
 
 def removeEmpty(L):
 	NewL = []
 	for Elmt in L:
-		if Elmt != '':
+		if Elmt != '' and Elmt != ' ':
 			NewL.append(Elmt)
 	return NewL
 
@@ -23,7 +23,6 @@ def removeEmpty(L):
 def make_token(teststring):
 	L = re.findall(reg, teststring)
 	L = removeEmpty(L)
-
 	for i in range(len(L)):
 		if L[i] in keywords:
 			L[i] = L[i].lower()

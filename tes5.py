@@ -1,5 +1,6 @@
 def do_something(x):
-    ''
+    '''This is multiline sample
+    '''
     if x == 0:
         return 0
     elif x + 4 == 1:

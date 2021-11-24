@@ -42,7 +42,6 @@ def q3(word):
         cc = word[0]
         tail = word[1:]
         if cc in number : return epsilon_move or q3(tail)
-        elif cc == '.'  : return epsilon_move or q2(tail)
         else            : return epsilon_move
 
 def q4(word):

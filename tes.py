@@ -5,6 +5,4 @@ elif x + 4 == 1:
 elif x == 32:
     a = 4
 else:
-    a = 5
-elif:
-    a = 7
+    1a = 5
