@@ -16,25 +16,25 @@ WhileLoop WhileLoop1 WhileLoop2
 Productions:
 S -> S S | SValid | e;
 SValid -> nl;
-SValid -> Statement nl;
+SValid -> Statement;
 SValid -> IfThenElse;
 SValid -> ForLoop;
 SValid -> WhileLoop;
-SValid -> MultilineString nl;
+SValid -> MultilineString;
 SValid -> FungsiD;
 SValid -> ClassD;
 
-Statement -> Ekspresi;
-Statement -> VariabelAtribut = Ekspresi;
-Statement -> VariabelAtribut OpArit = Ekspresi;
-Statement -> import VariabelAtribut as variabel;
-Statement -> from VariabelAtribut import variabel;
-Statement -> from VariabelAtribut import *;
-Statement -> import variabel;
-Statement -> from VariabelAtribut import variabel as variabel;
-Statement -> # Text;
-Statement -> pass;
-Statement -> raise VariabelAtribut;
+Statement -> Ekspresi nl;
+Statement -> VariabelAtribut = Ekspresi nl;
+Statement -> VariabelAtribut OpArit = Ekspresi nl;
+Statement -> import VariabelAtribut as variabel nl;
+Statement -> from VariabelAtribut import variabel nl;
+Statement -> from VariabelAtribut import * nl;
+Statement -> import variabel nl;
+Statement -> from VariabelAtribut import variabel as variabel nl;
+Statement -> # Text nl;
+Statement -> pass nl;
+Statement -> raise VariabelAtribut nl;
 
 VariabelAtribut -> variabel | VariabelAtribut . variabel;
 
@@ -50,7 +50,7 @@ Ekspresi -> Operand | Ekspresi Operator Operand;
 Ekspresi -> OpBoolUner Operand | OpBoolUner ( Operand );
 Ekspresi -> ( Ekspresi );
 
-Operand -> VariabelAtribut | Literal | FungsiC | String | true | false | none | MultilineString;
+Operand -> VariabelAtribut | Literal | FungsiC | String | true | false | none;
 Operand -> ( Operand NewOperand );
 Operand -> [ Operand NewOperand ];
 Operand -> { Operand NewOperand };
@@ -82,7 +82,7 @@ Index -> [ Ekspresi ] Index | [ Ekspresi ];
 String -> ' Text ' | " Text ";
 
 TextwithNL -> TextwithNL TextwithNL | Text | nl;
-MultilineString -> ''' TextwithNL ''' | """ TextwithNL """;
+MultilineString -> ''' TextwithNL ''' nl | """ TextwithNL """ nl;
 IfThenElse -> IfPart1 S IfPart2Star IfPart3EC;
 IfPart2Star -> IfPart2 S IfPart2Star | e;
 IfPart3EC -> IfPart3 S | e;
